@@ -3,11 +3,11 @@
 this tool support cli and web both:
 
 ```
-with cli : php readbookmark.php <json-file-url> > bookmark.txt "This will echo with <bookmark-title> -> <bookmark-url>"
+with cli : php readbookmark.php > bookmark.txt "This will echo with <bookmark-title> -> <bookmark-url>"
 with web : http://example.com/path/to/script/readbookmark.php   "This will echo with html tag: <a href=<bookmark-url> > <bookmark-title> </a>"
 ```
 
-this is a simple script for fast read json backup file, some bug I will fix if I'm not too busy. If you want push your request, just email me !
+this is a simple script for fast read json backup file, and I will fix these bugs in my spare time. If you want push your request, just email me !
 
 ## Futures ##
 
