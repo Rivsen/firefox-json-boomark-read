@@ -40,10 +40,11 @@ function read( $children, $node = 1, $result = '' ) {
                                 $result .= $GLOBALS['enter'];
                         }
                 }
+
         }else{
                 //$result .= ($space . $children->title . '(' . $children->id . ')');
                 //$result .= ' -> ' . @$children->uri . $GLOBALS['enter'];
-                $result .= echoresult( ($children->title.'('.$children->id.' '.$children->type.')'), @$children->uri, $space );
+                $result .= echoresult( ($children->title.'('.$children->id.' '.$children->type.')'), @$children->uri, $space, $children->type );
                 $node--;
         }
     }else{
@@ -65,6 +66,9 @@ function echoresult( $title, $href, $space, $var1 = '', $var2 = '' ){
                         $link .= ' -> ' . $href;
                 $link .= $GLOBALS['enter'];
         }
+
+        if( $var1 == 'text/x-moz-place-container' )
+                $link .= $GLOBALS['enter'];
         return $link;
 }
 
