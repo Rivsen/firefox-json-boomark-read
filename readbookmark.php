@@ -7,8 +7,7 @@ if( php_sapi_name() != 'cli' ){
         $space = '    ';
 }
 
-//$file = file_get_contents('bookmarks-2011-11-27.json');
-$file = file_get_contents('bookmarks-2011-11-28.json');
+$file = file_get_contents('bookmarks.json');
 $bookmark = json_decode($file);
 
 /*
@@ -26,14 +25,14 @@ function read( $children, $node = 1, $result = '' ) {
         $space .= $GLOBALS['space'];
     }
 
-    if( gettype($children) ){
+    if( gettype($children) == 'object' || @$children->type ){
         if( $result == '' )
             $result .= "** This is a firefox json bookmark export file.**" . $GLOBALS['enter'] . $GLOBALS['enter'];
 
         //if( @$children->children && $node <= 3 ){
         if( @$children->children ){
                 $node++;
-                $result .= ($space . $children->title . '(' . $children->id . ')');
+                $result .= ($space . $children->title . '(' . $children->id . ' ' .$children->type . ')');
                 $result .= $GLOBALS['enter'];
                 foreach( $children->children as $key => $child ){
                         $result = read( $child, $node, $result );
@@ -44,7 +43,7 @@ function read( $children, $node = 1, $result = '' ) {
         }else{
                 //$result .= ($space . $children->title . '(' . $children->id . ')');
                 //$result .= ' -> ' . @$children->uri . $GLOBALS['enter'];
-                $result .= echoresult( ($children->title . '(' . $children->id . ')'), @$children->uri, $space );
+                $result .= echoresult( ($children->title.'('.$children->id.' '.$children->type.')'), @$children->uri, $space );
                 $node--;
         }
     }else{
@@ -53,7 +52,7 @@ function read( $children, $node = 1, $result = '' ) {
     return $result;
 }
 
-function echoresult( $title, $href, $space ){
+function echoresult( $title, $href, $space, $var1 = '', $var2 = '' ){
         if( php_sapi_name() != 'cli' ){
                 if( $href ){
                         $link = $space . '<a href="' . $href . '" target="_blank">' . $title . '</a>' . $GLOBALS['enter'];
@@ -61,7 +60,10 @@ function echoresult( $title, $href, $space ){
                         $link = $space . '<a href="javascript:void(0)" style="color:#ccc">' . $title . '</a>' . $GLOBALS['enter'];
                 }
         }else{
-                $link = $space . $title . ' -> ' . $href . $GLOBALS['enter'];
+                $link = $space . $title;
+                if( $href )
+                        $link .= ' -> ' . $href;
+                $link .= $GLOBALS['enter'];
         }
         return $link;
 }
